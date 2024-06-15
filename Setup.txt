@@ -1,0 +1,44 @@
+=> First time (initial) setup:
+
+===== Setting up GCP Service Account =====>
+
+1) Go to Google Developer Console (https://console.cloud.google.com/apis/dashboard?pli=1)
+
+2) Select your project or create a new one (and then select it)
+
+3) Enable the Sheets API for your project:
+3.2) In the sidebar on the left, select APIs & Services
+3.3) Select Enabled APIs & Services
+3.4) Click the blue "Enable APIs and Services" button in the top bar
+3.5) Search for "sheets"
+3.6) Click on "Google Sheets API"
+3.7) Click the blue "Enable" button
+
+4) Create a service account for your project:
+4.2) In the sidebar on the left, select APIs & Services
+4.3) Select Credentials
+4.4) Click blue "+ CREATE CREDENTIALS" and select "Service account" option
+4.5) Enter name, description, click "CREATE"
+4.6) You can skip permissions, click "CONTINUE"
+4.7) Click "KEYS" button
+4.8) Click "ADD KEY" > "Create New Key" button
+4.9) Select the "JSON" key type option
+4.10) Click "DONE"
+4.11) Download the .json file and keep it on your drive (this will be used later)
+
+5) Go to your Google Sheet and click the "Share" button at the top right
+5.2) Share this sheet with the service account "EMAIL" address which is also in that .json file you downloaded earlier
+
+
+===== Building the project =====>
+1) Download & Install NodeJS (https://nodejs.org/en/download/package-manager)
+
+2) Open the project folder & paste the .json file you downloaded in the root of the project
+
+3) Open a terminal in the root folder and type "npm install"
+
+4) Type the name of the file you downloaded in auth.js
+
+5) Fill the required data in the constants defined above in "constants.js" file
+
+6) Run the project using "npm run-script run"

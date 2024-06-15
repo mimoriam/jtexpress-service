@@ -1,0 +1,21 @@
+{
+  "name": "jtexpress-service",
+  "version": "1.0.0",
+  "type": "module",
+  "main": "src/index.js",
+  "scripts": {
+    "run": "node src/index.js"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "description": "",
+  "dependencies": {
+    "browser-paths": "^1.1.5",
+    "date-fns": "^3.6.0",
+    "google-auth-library": "^9.11.0",
+    "google-spreadsheet": "^4.1.2",
+    "puppeteer-core": "^22.11.0",
+    "universal-user-agent": "^7.0.2"
+  }
+}

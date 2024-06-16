@@ -4,7 +4,7 @@ const checkForDeliveredStatus = async (sheet, currentColumnStr) => {
 
   if (bStatusCell.value === "Delivered") {
     console.log(`Delivered status at: B${rowStr}`);
-    process.exit();
+    return "Exists";
   }
   return "Fetching Data... ";
 };

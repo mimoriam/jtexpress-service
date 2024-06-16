@@ -13,7 +13,10 @@ const main = async () => {
     let [wayBillNo, sheet] = await getWayBillNoFromSheet(currentColumnStr);
 
     let fetching = await checkForDeliveredStatus(sheet, currentColumnStr);
-    console.log(fetching);
+
+    if (fetching === "Exists") {
+      break;
+    }
 
     let data = await extractDataFromBrowser(wayBillNo);
 

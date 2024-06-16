@@ -4,21 +4,31 @@ import { getUserAgent } from "universal-user-agent";
 import { format } from "date-fns";
 import { data, timeOutInSeconds } from "./constants.js";
 
+let browser;
+let page;
+
 const extractDataFromBrowser = async (wayBillNo) => {
   try {
-    const browser = await puppeteer.launch({
-      headless: false,
-      executablePath: getChromePath(),
-      args: [
-        "--disable-dev-shm-usage",
-        "--disable-accelerated-2d-canvas",
-        "--no-first-run",
-        "--disable-background-timer-throttling",
-        "--disable-backgrounding-occluded-windows",
-        "--disable-renderer-backgrounding",
-      ],
-    });
-    const [page] = await browser.pages();
+    if (!browser) {
+      browser = await puppeteer.launch({
+        headless: false,
+        executablePath: getChromePath(),
+        args: [
+          "--disable-dev-shm-usage",
+          "--disable-accelerated-2d-canvas",
+          "--no-first-run",
+          "--disable-background-timer-throttling",
+          "--disable-backgrounding-occluded-windows",
+          "--disable-renderer-backgrounding",
+        ],
+      });
+
+      // [page] = await browser.page();
+      page = await browser.newPage();
+    } else {
+      page = await browser.newPage();
+    }
+
     // await page.setUserAgent(
     //   "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko)" +
     //     " Chrome/126.0.0.0 Safari/537.36",
@@ -181,8 +191,11 @@ const extractDataFromBrowser = async (wayBillNo) => {
 
     data.Success = "Success";
 
-    await browser.close();
-    return data;
+    if (page !== (await browser.pages()[0])) {
+      await page.close();
+    }
+
+    return { data, browser };
   } catch (err) {
     console.log(err);
     console.log("Unable to scrape data from website");

@@ -18,14 +18,19 @@ const main = async () => {
       break;
     }
 
-    let data = await extractDataFromBrowser(wayBillNo);
+    let { data, browser } = await extractDataFromBrowser(wayBillNo);
 
     await writeBackToGoogleSheet(sheet, currentColumnStr);
     console.log(data);
 
     if (wayBillNo && sheet && fetching && data) {
       currentColumn++;
+      if (currentColumn > endColumn) {
+        await browser.close();
+        break;
+      }
     } else {
+      await browser.close();
       break;
     }
   }

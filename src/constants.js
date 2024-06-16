@@ -1,10 +1,15 @@
 // Change these constants:
 export const spreadSheetId = "1f6uxhLIE7XCtXkVlI9mVAlyEd-PTKSUDslAv2PSUFkk/";
-export const trackingCell = "E4";
+export const trackingCellRange = "E2-E3";
 export const timeOutInSeconds = 2000;
 
 // * Do not touch:
-export const rowNumber = trackingCell.match(/\d+/g);
+// Returns [2, 3] for "E2-E3":
+export const [startColumn, endColumn] = trackingCellRange
+  .split("-")
+  .map((col) => col.replace(/[A-Z]/, ""));
+
+export const startLetter = trackingCellRange[0];
 
 export const data = {
   "Status of": "",

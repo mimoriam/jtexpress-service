@@ -1,8 +1,8 @@
 import { auth } from "./auth.js";
 import { GoogleSpreadsheet } from "google-spreadsheet";
-import { data, rowNumber, spreadSheetId, trackingCell } from "./constants.js";
+import { data, spreadSheetId } from "./constants.js";
 
-const getWayBillNoFromSheet = async () => {
+const getWayBillNoFromSheet = async (currentColumnStr) => {
   try {
     const serviceAccountAuth = auth();
 
@@ -11,8 +11,9 @@ const getWayBillNoFromSheet = async () => {
 
     const sheet = doc.sheetsByIndex[0];
 
-    await sheet.loadCells(`A${rowNumber}:Z${rowNumber}`);
-    const eTrackingCell = sheet.getCellByA1(trackingCell);
+    const rowStr = currentColumnStr.match(/\d+/g);
+    await sheet.loadCells(`A${rowStr}:Z${rowStr}`);
+    const eTrackingCell = sheet.getCellByA1(currentColumnStr);
 
     const regex = /JTE\d\d\d\d\d\d\d\d\d\d\d\d/;
     const match = eTrackingCell.hyperlink.match(regex);

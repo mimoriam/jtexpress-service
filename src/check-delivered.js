@@ -1,10 +1,9 @@
-import { rowNumber } from "./constants.js";
-
-const checkForDeliveredStatus = async (sheet) => {
-  const bStatusCell = sheet.getCellByA1(`B${rowNumber}`);
+const checkForDeliveredStatus = async (sheet, currentColumnStr) => {
+  const rowStr = currentColumnStr.match(/\d+/g);
+  const bStatusCell = sheet.getCellByA1(`B${rowStr}`);
 
   if (bStatusCell.value === "Delivered") {
-    console.log(`Delivered status at: B${rowNumber}`);
+    console.log(`Delivered status at: B${rowStr}`);
     process.exit();
   }
   return "Fetching Data... ";

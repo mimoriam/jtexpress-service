@@ -2,17 +2,30 @@ import { getWayBillNoFromSheet } from "./generate-tracking.js";
 import { extractDataFromBrowser } from "./scrape-data.js";
 import { writeBackToGoogleSheet } from "./google-export.js";
 import { checkForDeliveredStatus } from "./check-delivered.js";
+import { endColumn, startColumn, startLetter } from "./constants.js";
 
 const main = async () => {
-  const [wayBillNo, sheet] = await getWayBillNoFromSheet();
+  let currentColumn = startColumn;
 
-  const fetching = await checkForDeliveredStatus(sheet);
-  console.log(fetching);
+  while (currentColumn <= endColumn) {
+    const currentColumnStr = `${startLetter}${currentColumn}`;
 
-  const data = await extractDataFromBrowser(wayBillNo);
+    let [wayBillNo, sheet] = await getWayBillNoFromSheet(currentColumnStr);
 
-  await writeBackToGoogleSheet(sheet);
-  console.log(data);
+    let fetching = await checkForDeliveredStatus(sheet, currentColumnStr);
+    console.log(fetching);
+
+    let data = await extractDataFromBrowser(wayBillNo);
+
+    await writeBackToGoogleSheet(sheet, currentColumnStr);
+    console.log(data);
+
+    if (wayBillNo && sheet && fetching && data) {
+      currentColumn++;
+    } else {
+      break;
+    }
+  }
 };
 
 await main();

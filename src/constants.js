@@ -1,6 +1,6 @@
 // Change these constants:
 export const spreadSheetId = "1f6uxhLIE7XCtXkVlI9mVAlyEd-PTKSUDslAv2PSUFkk/";
-export const trackingCell = "E5";
+export const trackingCell = "E4";
 export const timeOutInSeconds = 2000;
 
 // * Do not touch:
@@ -17,4 +17,6 @@ export const data = {
   "Abnormal Reason": "",
   "Attempts Made": "",
   "Time in transit": "",
+  "Last Updated": "",
+  Success: "",
 };

@@ -177,6 +177,10 @@ const extractDataFromBrowser = async (wayBillNo) => {
 
     data["Time in transit"] = shippingDateText[3];
 
+    data["Last Updated"] = format(new Date(), "yyyy-MM-dd h:m a");
+
+    data.Success = "Success";
+
     await browser.close();
     return data;
   } catch (err) {

@@ -8,6 +8,8 @@ const writeBackToGoogleSheet = async (sheet) => {
     const riderNumberCell = sheet.getCellByA1(`U${rowNumber}`);
     const attemptsCell = sheet.getCellByA1(`T${rowNumber}`);
     const abnormalReasonCell = sheet.getCellByA1(`V${rowNumber}`);
+    const lastUpdatedCell = sheet.getCellByA1(`W${rowNumber}`);
+    const successCell = sheet.getCellByA1(`X${rowNumber}`);
 
     statusCell.value = data["Status of"];
     dispatchDateCell.value = data["Dispatch Date"];
@@ -17,6 +19,8 @@ const writeBackToGoogleSheet = async (sheet) => {
     riderNumberCell.value = data["Rider Number"];
     attemptsCell.value = data["Attempts Made"];
     abnormalReasonCell.value = data["Abnormal Reason"];
+    lastUpdatedCell.value = data["Last Updated"];
+    successCell.value = data.Success;
 
     await sheet.saveUpdatedCells();
   } catch (err) {

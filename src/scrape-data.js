@@ -153,9 +153,13 @@ const extractDataFromBrowser = async (wayBillNo) => {
         }
       });
 
-    const abnormalAttempts = progressSelectorResultHead.filter((str) =>
+    let abnormalAttempts = progressSelectorResultHead.filter((str) =>
       str.includes("abnormal"),
     ).length;
+
+    if (abnormalAttempts === 0) {
+      abnormalAttempts = 1;
+    }
 
     //? Results in Text/Strings:
     data["Status of"] = status;

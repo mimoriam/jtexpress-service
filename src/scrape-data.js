@@ -18,7 +18,7 @@ const extractDataFromBrowser = async (wayBillNo) => {
         "--disable-renderer-backgrounding",
       ],
     });
-    const page = await browser.newPage();
+    const [page] = await browser.pages();
     // await page.setUserAgent(
     //   "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko)" +
     //     " Chrome/126.0.0.0 Safari/537.36",
@@ -29,9 +29,7 @@ const extractDataFromBrowser = async (wayBillNo) => {
     // Block images/videos/font from loading:
     await page.setRequestInterception(true);
     page.on("request", (request) => {
-      if (request.isInterceptResolutionHandled()) {
-        return;
-      }
+      if (request.isInterceptResolutionHandled()) return;
       if (
         request.resourceType() === "image" ||
         request.resourceType() === "font"

@@ -17,8 +17,10 @@ const main = async () => {
     if (fetching === "Exists") {
       currentColumn++;
       if (currentColumn > endColumn) {
-        await browser.close();
-        break;
+        if (browser) {
+          await browser.close();
+          break;
+        }
       }
       continue;
     }

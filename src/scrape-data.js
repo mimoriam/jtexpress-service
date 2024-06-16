@@ -4,7 +4,7 @@ import { getUserAgent } from "universal-user-agent";
 import { format } from "date-fns";
 import { data, timeOutInSeconds } from "./constants.js";
 
-let browser;
+export let browser;
 let page;
 
 const extractDataFromBrowser = async (wayBillNo) => {
@@ -199,7 +199,7 @@ const extractDataFromBrowser = async (wayBillNo) => {
       await page.close();
     }
 
-    return { data, browser };
+    return { data };
   } catch (err) {
     console.log(err);
     console.log("Unable to scrape data from website");

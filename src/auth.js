@@ -9,7 +9,9 @@ const auth = () => {
       scopes: ["https://www.googleapis.com/auth/spreadsheets"],
     });
   } catch (err) {
-    console.log("Unable to connect to Google Sheets API. Please check credentials")
+    console.log(err);
+    console.log("Unable to connect to Google Sheets API. Please check credentials");
+    process.exit();
   }
 };
 

@@ -1,6 +1,6 @@
 // Change these constants:
 export const spreadSheetId = "1f6uxhLIE7XCtXkVlI9mVAlyEd-PTKSUDslAv2PSUFkk/";
-export const trackingCellRange = "E2-E4";
+export const trackingCellRange = "E9-E10";
 export const timeOutInSeconds = 2000;
 
 // * Do not touch:

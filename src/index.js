@@ -5,9 +5,11 @@ import { checkForDeliveredStatus } from "./check-delivered.js";
 import { endColumn, startColumn, startLetter } from "./constants.js";
 
 const main = async () => {
+  // For E9-E10, JS considers "9" < "10" to be false
+  // Dumb as fuck bug, I swear
   let currentColumn = startColumn;
 
-  while (currentColumn <= endColumn) {
+  while (Number(currentColumn) <= Number(endColumn)) {
     const currentColumnStr = `${startLetter}${currentColumn}`;
 
     let [wayBillNo, sheet] = await getWayBillNoFromSheet(currentColumnStr);

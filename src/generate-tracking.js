@@ -24,12 +24,12 @@ const getWayBillNoFromSheet = async (currentColumnStr) => {
   } catch (err) {
     if (err instanceof TypeError) {
       console.log(
-        `Unable to get tracking number from Google Sheet for: ${currentColumnStr}`,
+        `No tracking number for row at: ${currentColumnStr}`,
       );
       return ["error", null];
     } else if (err instanceof AxiosError) {
-      console.log(`API Quota exceeded!`);
-      return ["error", null];
+      console.log(`API Quota exceeded for ${currentColumnStr}!`);
+      throw err;
     } else {
       console.log(err);
       return ["error", null];

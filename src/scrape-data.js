@@ -35,6 +35,7 @@ const extractDataFromBrowser = async (wayBillNo, currentColumnStr) => {
     // );
     await page.setUserAgent(getUserAgent());
     await page.setViewport({ width: 1600, height: 900 });
+    console.log(`Starting to scrape data for row: ${currentColumnStr}`);
 
     // Block images/videos/font from loading:
     await page.setRequestInterception(true);
@@ -64,7 +65,6 @@ const extractDataFromBrowser = async (wayBillNo, currentColumnStr) => {
     const progressSelectorHead = `div.relative > ul > li > div.flex-1.py-3 > div.text-body-website`;
     const progressSelectorTail = `div.relative > ul > li > div.flex-1.py-3 > div.flex.flex-col.text-gray-400`;
 
-    console.log(`Starting to scrape data for row: ${currentColumnStr}`);
     //! Scraping:
     const packageResultText = await page.waitForSelector(
       packageResultSelector,
@@ -84,11 +84,20 @@ const extractDataFromBrowser = async (wayBillNo, currentColumnStr) => {
 
     let status = progressSelectorResultHead[0];
 
-    const onRoutePattern = new RegExp("\\b" + "sorting center" + "\\b", "gi");
+    // const onRoutePattern = new RegExp("\\b" + "sorting center" + "\\b", "gi");
+    // let m = status.match(onRoutePattern);
+    //
+    // if (m !== null) {
+    //   if (m[0] === "sorting center") {
+    //     status = "On Route";
+    //   }
+    // }
+
+    const onRoutePattern = new RegExp("\\b" + "was sent to" + "\\b", "gi");
     let m = status.match(onRoutePattern);
 
     if (m !== null) {
-      if (m[0] === "sorting center") {
+      if (m[0] === "was sent to") {
         status = "On Route";
       }
     }

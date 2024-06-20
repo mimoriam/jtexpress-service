@@ -11,11 +11,12 @@
   "license": "ISC",
   "description": "",
   "dependencies": {
+    "axios": "^1.7.2",
     "browser-paths": "^1.1.5",
     "date-fns": "^3.6.0",
     "google-auth-library": "^9.11.0",
     "google-spreadsheet": "^4.1.2",
-    "puppeteer-core": "^22.11.0",
+    "puppeteer-core": "^22.11.2",
     "universal-user-agent": "^7.0.2"
   }
 }

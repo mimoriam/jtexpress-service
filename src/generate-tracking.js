@@ -1,6 +1,7 @@
 import { auth } from "./auth.js";
 import { GoogleSpreadsheet } from "google-spreadsheet";
 import { data, spreadSheetId } from "./constants.js";
+import { AxiosError } from "axios";
 
 const getWayBillNoFromSheet = async (currentColumnStr) => {
   try {
@@ -21,8 +22,18 @@ const getWayBillNoFromSheet = async (currentColumnStr) => {
     data["Track#"] = match[0];
     return [match[0], sheet];
   } catch (err) {
-    console.log(`Unable to get tracking number from Google Sheet for: ${currentColumnStr}`);
-    return ["error", null];
+    if (err instanceof TypeError) {
+      console.log(
+        `Unable to get tracking number from Google Sheet for: ${currentColumnStr}`,
+      );
+      return ["error", null];
+    } else if (err instanceof AxiosError) {
+      console.log(`API Quota exceeded!`);
+      return ["error", null];
+    } else {
+      console.log(err);
+      return ["error", null];
+    }
   }
 };
 

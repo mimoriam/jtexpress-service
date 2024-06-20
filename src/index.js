@@ -38,7 +38,7 @@ const main = async () => {
       continue;
     }
 
-    let [data, err] = await extractDataFromBrowser(wayBillNo);
+    let [data, err] = await extractDataFromBrowser(wayBillNo, currentColumnStr);
 
     if (err === "error") {
       currentColumn++;

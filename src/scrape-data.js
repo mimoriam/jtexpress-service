@@ -7,7 +7,7 @@ import { data, timeOutInSeconds } from "./constants.js";
 export let browser;
 let page;
 
-const extractDataFromBrowser = async (wayBillNo) => {
+const extractDataFromBrowser = async (wayBillNo, currentColumnStr) => {
   try {
     if (!browser) {
       browser = await puppeteer.launch({
@@ -64,6 +64,7 @@ const extractDataFromBrowser = async (wayBillNo) => {
     const progressSelectorHead = `div.relative > ul > li > div.flex-1.py-3 > div.text-body-website`;
     const progressSelectorTail = `div.relative > ul > li > div.flex-1.py-3 > div.flex.flex-col.text-gray-400`;
 
+    console.log(`Starting to scrape data for row: ${currentColumnStr}`);
     //! Scraping:
     const packageResultText = await page.waitForSelector(
       packageResultSelector,

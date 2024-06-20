@@ -14,6 +14,17 @@ const main = async () => {
 
     let [wayBillNo, sheet] = await getWayBillNoFromSheet(currentColumnStr);
 
+    if (wayBillNo === "error") {
+      currentColumn++;
+      if (currentColumn > endColumn) {
+        if (browser) {
+          await browser.close();
+          break;
+        }
+      }
+      continue;
+    }
+
     let fetching = await checkForDeliveredStatus(sheet, currentColumnStr);
 
     if (fetching === "Exists") {

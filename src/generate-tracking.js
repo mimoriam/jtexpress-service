@@ -21,9 +21,8 @@ const getWayBillNoFromSheet = async (currentColumnStr) => {
     data["Track#"] = match[0];
     return [match[0], sheet];
   } catch (err) {
-    console.log(err);
-    console.log("Unable to get tracking number from Google Sheet");
-    process.exit();
+    console.log(`Unable to get tracking number from Google Sheet for: ${currentColumnStr}`);
+    return ["error", null];
   }
 };
 

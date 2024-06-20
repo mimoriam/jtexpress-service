@@ -163,7 +163,6 @@ const extractDataFromBrowser = async (wayBillNo) => {
 
     //? Results in Text/Strings:
     data["Status of"] = status;
-    console.log(status);
 
     if (data["Status of"].length > 11) {
       data["Status of"] = "ERROR";
@@ -208,11 +207,10 @@ const extractDataFromBrowser = async (wayBillNo) => {
       await page.close();
     }
 
-    return { data };
+    return [data];
   } catch (err) {
-    console.log(err);
     console.log("Unable to scrape data from website");
-    process.exit();
+    return [data, "error"];
   }
 };
 

@@ -38,7 +38,18 @@ const main = async () => {
       continue;
     }
 
-    let { data } = await extractDataFromBrowser(wayBillNo);
+    let [data, err] = await extractDataFromBrowser(wayBillNo);
+
+    if (err === "error") {
+      currentColumn++;
+      if (currentColumn > endColumn) {
+        if (browser) {
+          await browser.close();
+          break;
+        }
+      }
+      continue;
+    }
 
     await writeBackToGoogleSheet(sheet, currentColumnStr);
     console.log(data);

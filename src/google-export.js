@@ -25,9 +25,7 @@ const writeBackToGoogleSheet = async (sheet, currentColumnStr) => {
 
     await sheet.saveUpdatedCells();
   } catch (err) {
-    console.log(err);
     console.log("Unable to write data back to Google Sheets");
-    process.exit();
   }
 };
 

@@ -163,6 +163,11 @@ const extractDataFromBrowser = async (wayBillNo) => {
 
     //? Results in Text/Strings:
     data["Status of"] = status;
+    console.log(status);
+
+    if (data["Status of"].length > 11) {
+      data["Status of"] = "ERROR";
+    }
 
     data["Dispatch Date"] = format(
       new Date(
@@ -193,7 +198,11 @@ const extractDataFromBrowser = async (wayBillNo) => {
 
     data["Last Updated"] = format(new Date(), "yyyy-MM-dd h:mm a");
 
-    data.Success = "Success";
+    if (data["Status of"] === "ERROR") {
+      data.Success = "ERROR";
+    } else {
+      data.Success = "Success";
+    }
 
     if (page !== (await browser.pages()[0])) {
       await page.close();

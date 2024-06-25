@@ -1,0 +1,18 @@
+crontab -e
+
+*/2 * * * *
+Run every 2 mins
+
+0 8 * * *
+Everyday at 8 AM
+
+0 12 * * *
+Everyday at 12 PM (noon)
+
+0 20 * * *
+Everyday at 8 PM
+
+0 8 * * * cd /home/xrdpuser/Desktop/jtexpress/src && /home/xrdpuser/.nvm/versions/node/v20.15.0/bin/node index.js >> cron_results.log 2>&1
+0 12 * * * cd /home/xrdpuser/Desktop/jtexpress/src && /home/xrdpuser/.nvm/versions/node/v20.15.0/bin/node index.js >> cron_results.log 2>&1
+0 20 * * * cd /home/xrdpuser/Desktop/jtexpress/src && /home/xrdpuser/.nvm/versions/node/v20.15.0/bin/node index.js >> cron_results.log 2>&1
+

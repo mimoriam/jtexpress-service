@@ -11,6 +11,10 @@ const extractDataFromBrowser = async (wayBillNo, currentColumnStr) => {
   try {
     if (!browser) {
       browser = await puppeteer.launch({
+        // Add this for Cron scheduling:
+        env: {
+          DISPLAY: ":10.0"
+        },
         headless: false,
         executablePath: getChromePath(),
         args: [

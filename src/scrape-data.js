@@ -29,10 +29,6 @@ const extractDataFromBrowser = async (wayBillNo, currentColumnStr) => {
       page = await browser.newPage();
     }
 
-    // await page.setUserAgent(
-    //   "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko)" +
-    //     " Chrome/126.0.0.0 Safari/537.36",
-    // );
     await page.setUserAgent(getUserAgent());
     await page.setViewport({ width: 1600, height: 900 });
     console.log(`Starting to scrape data for row: ${currentColumnStr}`);
@@ -84,15 +80,6 @@ const extractDataFromBrowser = async (wayBillNo, currentColumnStr) => {
 
     let status = progressSelectorResultHead[0];
 
-    // const onRoutePattern = new RegExp("\\b" + "sorting center" + "\\b", "gi");
-    // let m = status.match(onRoutePattern);
-    //
-    // if (m !== null) {
-    //   if (m[0] === "sorting center") {
-    //     status = "On Route";
-    //   }
-    // }
-
     const onRoutePattern = new RegExp("\\b" + "was sent to" + "\\b", "gi");
     let m = status.match(onRoutePattern);
 
@@ -135,6 +122,31 @@ const extractDataFromBrowser = async (wayBillNo, currentColumnStr) => {
       }
     }
 
+    const isBeingReturnedPattern = new RegExp(
+      "\\b" + "is being returned" + "\\b",
+      "gi",
+    );
+    let m5 = status.match(isBeingReturnedPattern);
+
+    if (m5 !== null) {
+      if (m5[0] === "is being returned") {
+        status = "Returning";
+      }
+    }
+
+    const deliveringPattern = new RegExp(
+      "\\b" + "out for delivery" + "\\b",
+      "gi",
+    );
+
+    let m6 = status.match(deliveringPattern);
+
+    if (m6 !== null) {
+      if (m6[0] === "out for delivery") {
+        status = "Delivering";
+      }
+    }
+
     const progressSelectorResultTail = await page.$$eval(
       progressSelectorTail,
       (el) => el.map((e) => e.textContent),
@@ -174,7 +186,7 @@ const extractDataFromBrowser = async (wayBillNo, currentColumnStr) => {
     //? Results in Text/Strings:
     data["Status of"] = status;
 
-    if (data["Status of"].length > 11) {
+    if (data["Status of"].length > 17) {
       data["Status of"] = "ERROR";
     }
 
@@ -219,6 +231,7 @@ const extractDataFromBrowser = async (wayBillNo, currentColumnStr) => {
 
     return [data];
   } catch (err) {
+    console.log(err);
     console.log("Unable to scrape data from website");
     return [data, "error"];
   }

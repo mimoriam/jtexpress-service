@@ -1,15 +1,8 @@
-import { auth } from "./auth.js";
-import { GoogleSpreadsheet } from "google-spreadsheet";
-import { data, spreadSheetId } from "./constants.js";
+import { data } from "./constants.js";
 import { AxiosError } from "axios";
 
-const getWayBillNoFromSheet = async (currentColumnStr) => {
+const getWayBillNoFromSheet = async (currentColumnStr, doc) => {
   try {
-    const serviceAccountAuth = auth();
-
-    const doc = new GoogleSpreadsheet(spreadSheetId, serviceAccountAuth);
-    await doc.loadInfo();
-
     const sheet = doc.sheetsByIndex[0];
 
     const rowStr = currentColumnStr.match(/\d+/g);
@@ -23,9 +16,7 @@ const getWayBillNoFromSheet = async (currentColumnStr) => {
     return [match[0], sheet];
   } catch (err) {
     if (err instanceof TypeError) {
-      console.log(
-        `No tracking number for row at: ${currentColumnStr}`,
-      );
+      console.log(`No tracking number for row at: ${currentColumnStr}`);
       return ["error", null];
     } else if (err instanceof AxiosError) {
       console.log(`API Quota exceeded for ${currentColumnStr}!`);

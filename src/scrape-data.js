@@ -196,7 +196,7 @@ const extractDataFromBrowser = async (wayBillNo, currentColumnStr) => {
 
     data["Dispatch Date"] = format(
       new Date(
-        progressSelectorResultTail[progressSelectorResultTail.length - 1]
+        progressSelectorResultTail[progressSelectorResultTail.length - 2]
           .split(",")[0]
           .replace(/\//g, "-"),
       ),

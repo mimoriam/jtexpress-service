@@ -84,14 +84,14 @@ const extractDataFromBrowser = async (wayBillNo, currentColumnStr) => {
 
     let status = progressSelectorResultHead[0];
 
-    // const onRoutePattern = new RegExp("\\b" + "was sent to" + "\\b", "gi");
-    // let m = status.match(onRoutePattern);
-    //
-    // if (m !== null) {
-    //   if (m[0] === "was sent to") {
-    //     status = "On Route";
-    //   }
-    // }
+    const onRoutePattern = new RegExp("\\b" + "was sent to" + "\\b", "gi");
+    let m = status.match(onRoutePattern);
+
+    if (m !== null) {
+      if (m[0] === "was sent to") {
+        status = "On Route";
+      }
+    }
 
     const returnedPattern = new RegExp(
       "\\b" + "returned to the sender" + "\\b",
@@ -200,7 +200,7 @@ const extractDataFromBrowser = async (wayBillNo, currentColumnStr) => {
 
     data["Status of"] = status;
 
-    if (data["Status of"].length > 20) {
+    if (data["Status of"].length > 24) {
       data["Status of"] = "ERROR";
     }
 

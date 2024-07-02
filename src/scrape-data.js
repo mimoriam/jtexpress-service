@@ -84,14 +84,14 @@ const extractDataFromBrowser = async (wayBillNo, currentColumnStr) => {
 
     let status = progressSelectorResultHead[0];
 
-    const onRoutePattern = new RegExp("\\b" + "was sent to" + "\\b", "gi");
-    let m = status.match(onRoutePattern);
-
-    if (m !== null) {
-      if (m[0] === "was sent to") {
-        status = "On Route";
-      }
-    }
+    // const onRoutePattern = new RegExp("\\b" + "was sent to" + "\\b", "gi");
+    // let m = status.match(onRoutePattern);
+    //
+    // if (m !== null) {
+    //   if (m[0] === "was sent to") {
+    //     status = "On Route";
+    //   }
+    // }
 
     const returnedPattern = new RegExp(
       "\\b" + "returned to the sender" + "\\b",
@@ -188,9 +188,19 @@ const extractDataFromBrowser = async (wayBillNo, currentColumnStr) => {
     }
 
     //? Results in Text/Strings:
+    data["Package Result"] = (
+        await packageResultText.evaluate((el) => el.textContent)
+    ).trim();
+
+    if (data["Package Result"] === "In transit") {
+      status = "On Route";
+    } else if (data["Package Result"] === "Package delivered") {
+      status = "Delivered";
+    }
+
     data["Status of"] = status;
 
-    if (data["Status of"].length > 17) {
+    if (data["Status of"].length > 20) {
       data["Status of"] = "ERROR";
     }
 
@@ -207,10 +217,6 @@ const extractDataFromBrowser = async (wayBillNo, currentColumnStr) => {
       new Date(progressSelectorResultTail[0].split(",")[0].replace(/\//g, "-")),
       "yyyy-MM-dd",
     );
-
-    data["Package Result"] = (
-      await packageResultText.evaluate((el) => el.textContent)
-    ).trim();
 
     data["Rider Name"] = riderInfo[0]?.name;
     data["Rider Number"] = riderInfo[0]?.phone;

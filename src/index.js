@@ -102,4 +102,6 @@ const main = async () => {
   }
 };
 
+console.log(`>>>>>>>>>>> Starting script at: ${new Date().toLocaleTimeString()} >>>>>>>>>>> \n`);
 await main();
+console.log(`\n<<<<<<<<<<<< Ending script at: ${new Date().toLocaleTimeString()} <<<<<<<<<<< \n`);

@@ -13,7 +13,7 @@ const extractDataFromBrowser = async (wayBillNo, currentColumnStr) => {
       browser = await puppeteer.launch({
         // Add this for Cron scheduling:
         env: {
-          DISPLAY: ":10.0"
+          DISPLAY: ":10.0",
         },
         headless: false,
         executablePath: getChromePath(),
@@ -83,6 +83,9 @@ const extractDataFromBrowser = async (wayBillNo, currentColumnStr) => {
     );
 
     let status = progressSelectorResultHead[0];
+    let checkReturningStatusSearch = progressSelectorResultHead.filter((s) =>
+      s.toLocaleLowerCase().includes("is being retur"),
+    );
 
     const onRoutePattern = new RegExp("\\b" + "was sent to" + "\\b", "gi");
     let m = status.match(onRoutePattern);
@@ -147,7 +150,11 @@ const extractDataFromBrowser = async (wayBillNo, currentColumnStr) => {
 
     if (m6 !== null) {
       if (m6[0] === "out for delivery") {
-        status = "Delivering";
+        if (checkReturningStatusSearch.length === 0) {
+          status = "Delivering";
+        } else {
+          status = "Returning";
+        }
       }
     }
 
@@ -189,7 +196,7 @@ const extractDataFromBrowser = async (wayBillNo, currentColumnStr) => {
 
     //? Results in Text/Strings:
     data["Package Result"] = (
-        await packageResultText.evaluate((el) => el.textContent)
+      await packageResultText.evaluate((el) => el.textContent)
     ).trim();
 
     if (data["Package Result"] === "In transit") {

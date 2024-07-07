@@ -92,7 +92,11 @@ const extractDataFromBrowser = async (wayBillNo, currentColumnStr) => {
 
     if (m !== null) {
       if (m[0] === "was sent to") {
-        status = "On Route";
+        if (checkReturningStatusSearch.length === 0) {
+          status = "On Route";
+        } else {
+          status = "Returning";
+        }
       }
     }
 
@@ -200,7 +204,11 @@ const extractDataFromBrowser = async (wayBillNo, currentColumnStr) => {
     ).trim();
 
     if (data["Package Result"] === "In transit") {
-      status = "On Route";
+      if (checkReturningStatusSearch.length === 0) {
+        status = "On Route";
+      } else {
+        status = "Returning";
+      }
     } else if (data["Package Result"] === "Package delivered") {
       status = "Delivered";
     }
